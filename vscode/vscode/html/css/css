@@ -1,0 +1,19 @@
+table, th, tr{
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+caption{
+    font-size: 30px;
+}
+thead{
+    background-color: blueviolet;
+}
+tfoot{
+    background-color: rgb(195, 139, 247);
+}
+td{
+    text-align: right;
+}
+caption{
+    font-size: 30px
+}
