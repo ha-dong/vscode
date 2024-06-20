@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
+    <script src="ddg.js"></script>
+    <title>두더지 잡기</title>
+    <style>
+        #board{
+             width: 600px; height: 600px; border: 1px solid #333;
+             position: relative;
+             background-color: darkgreen;
+        }
+        #send { 
+                 width: 200px; height: 200px;
+                 border: 1px #FFFFFF; 
+            }
+        #ddg{
+            width: 100px; height: 100px
+        }
+    </style>
+</head>
+<body>
+    <div id = 'wrapper'>
+        <div id ='board'>
+            <img id = "send" src = "send.png">
+            <img id = "ddg" src = "ddg.png"/>
+        </div>
+        <p>
+            <input id="start" type="button" value="시작" />&nbsp;
+        </p>
+    </div>
+</body>
+</html>
