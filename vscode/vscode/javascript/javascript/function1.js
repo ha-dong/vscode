@@ -14,7 +14,7 @@ console.log(add(3, 5, 7));//뒤를 아무리 생성해도 8이 나옴
 
 console.log(add('hello', 'javascript'));//hellojavascript
 
-//함수 리터럴: 함수에 쓰여진 함수갑스 runtime에 메모리 생성
+//함수 리터럴: 함수에 쓰여진 함수값 runtime에 메모리 생성
 const func1 = function(){
     console.log("\nfunc1")
 };

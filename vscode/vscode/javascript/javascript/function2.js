@@ -1,6 +1,5 @@
 //즉시 실행 함수(IIFE, Immediately Invoked Function Expression)
-
-(function(){ //괄호로 묶어주고 인자가 있으면 넣고 없으면 안넣는다.{}실행부 뒤에 괄호는 감싸는 역할
+(function(){ //괄호로 묶어주고 인자가 있으면 넣고 없으면 안넣는다. {}실행부 뒤에 괄호는 감싸는 역할
     const a = 3;
     const b = 5;
     console.log(3 + 5);
@@ -46,7 +45,7 @@ function outer(){
         const i = 'i';
         console.log(i);
     }//inner
-    `   `
+       
     //console.log(i);  i는 inner함수의 스코프를 가진다.
     inner();
 }//outer
@@ -85,7 +84,6 @@ const forEachArr = arr.forEach(function(element){
     console.log(element);
 });
 console.log(forEachArr);
-
 
 const mapArr = arr.map(function(element){
     return element % 2;

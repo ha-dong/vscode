@@ -5,7 +5,7 @@
 //이벤트 리스너(event listener) = 이벤트 콜백   = 이벤트핸들러
 //js
 
-//loda 이벤트에 대한 콜백함수
+//load 이벤트에 대한 콜백함수
 // window.onload = function(){
 
 //     //click 이벤트에 대한 콜백함수
