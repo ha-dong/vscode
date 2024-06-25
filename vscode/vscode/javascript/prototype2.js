@@ -1,3 +1,4 @@
+//0624(월)
 //프로토 타입 변경에 따른 동적 상속 변경
 function Dog(name, sound){
     this.name = name;

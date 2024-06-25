@@ -1,3 +1,4 @@
+//0624(월)
 //Object.prototype
 
 const person={
@@ -72,3 +73,10 @@ console.log(Object.entries(person1));
 //forEach: 배열들이 들어오면 하나씩 처리해줌
 Object.entries(person1).forEach(
     ([key, values]) => console.log(key+':'+value+' '));
+
+// console.log(window);
+console.log(global);
+console.log(globalThis);
+console.log(global===globalThis);
+
+    
