@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>    
+    <script src="ddg.js"></script>
+    <title>두더지 잡기</title>
+    <style>
+        
+        body {
+            text-align: center; /* 전체 텍스트 정렬을 중앙으로 설정 */
+            font-family: Arial, sans-serif;
+            display: flex; /* Flexbox를 사용하여 아이템을 가운데 정렬 */
+            justify-content: center; /* 수평 가운데 정렬 */
+            align-items: center; /* 수직 가운데 정렬 */
+            height: 100vh;
+        }
+        .container {
+            display: flex; /* Flexbox를 사용하여 아이템을 가로로 배치 */
+            flex-direction: column; /* 아이템을 세로로 배치 */
+            align-items: center; /* 수직 가운데 정렬 */
+        }
+        .board {
+            display: grid; /* 그리드 컨테이너 설정 */
+            grid-template-columns: repeat(3, 100px); /* 3개의 열, 각 열 너비 100px */
+            grid-template-rows: repeat(3, 100px); /* 3개의 행, 각 행 높이 100px */
+            gap: 5px; /* 셀 간 간격 설정 */
+            margin-top: 20px;
+        }
+        .square {
+            background-color: #eee;
+            border: 1px solid #ccc;
+            display: flex; /* Flexbox를 사용하여 아이템을 가운데 정렬 */
+            justify-content: center; /* 수평 가운데 정렬 */
+            align-items: center; 
+            cursor: pointer; 
+            font-weight: bold; 
+            color: #333;
+        }
+        #scoreContainer, #timeContainer {
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: left;
+            margin-left: 20px;
+        }
+        #buttons {
+            margin-top: 20px; /* 버튼들의 위쪽 여백 설정 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="scoreContainer">점수: <span id="score">0</span></div>
+        <div id="timeContainer">남은 시간: <span id="time">10</span>초</div>
+        <div class="board">
+            <div class="square" id="square1"></div>
+            <div class="square" id="square2"></div>
+            <div class="square" id="square3"></div>
+            <div class="square" id="square4"></div>
+            <div class="square" id="square5"></div>
+            <div class="square" id="square6"></div>
+            <div class="square" id="square7"></div>
+            <div class="square" id="square8"></div>
+            <div class="square" id="square9"></div>
+        </div>
+        <div id="buttons">
+            <button id="startBtn">시작</button>
+            <button id="restartBtn">다시 시작</button>
+        </div>
+    </div>
+</body>
+</html>
