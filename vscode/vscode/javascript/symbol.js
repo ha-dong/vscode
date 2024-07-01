@@ -42,4 +42,3 @@ const person = {
 
 console.log(person[Symbol.for('name')]); //홍길동
 console.log(person[Symbol.for('age')]); //20
-
