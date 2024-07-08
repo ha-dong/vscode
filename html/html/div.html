@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Div 실습</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        #header{
+            background-color: rgb(199, 196, 245);
+        }
+        #left, #content{
+            min-height: 400px;
+            display: inline-block;
+        }
+        #left{
+            width: 200px;
+            background-color: antiquewhite;
+        }
+        #content{
+            width: 600px;
+            background-color: rgb(192, 134, 247);
+        }
+        #footer{
+            background-color: lightgray;
+        }
+
+    </style>
+</head>
+<body>
+    <div id = "wrapper">
+        <div id = "header">
+            해더
+        </div>
+        <div id = "body">
+            <div id = "left">
+                좌메뉴
+            </div>
+            <div id = "content">
+                컨텐츠
+            </div>
+    </div>
+    <div id = "footer">
+            푸터
+    </div>
+</body>
+</html>
