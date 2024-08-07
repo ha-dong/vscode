@@ -13582,18 +13582,32 @@ textarea.form-control-lg {
 }
 
 /* 하트 모양 생성 */
-/* 기본 하트 버튼 스타일 */
-.heart {
-    width: 30px;
-    height: 30px;
-    background: #ffc7c9;
-    position: relative;
-    transform: rotate(45deg);
-  }
+/* 기본 하트 스타일 */
+.btn.heart {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: pink; /* 기본 하트 색상 */
+    font-size: 24px; /* 하트 크기 조정 */
+    transition: color 0.3s; /* 색상 변경 애니메이션 */
+}
 
-/* 클릭 시 하트 색상 변경 */
-.heart.liked {
-    color: red; /* 클릭 시 하트 색상 */
+/* 하트 클릭 시 색상 변경 */
+.btn.heart.liked {
+    color: red; /* 클릭 후 하트 색상 */
+}
+.interest-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffcccc;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */
