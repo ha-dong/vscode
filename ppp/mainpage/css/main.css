@@ -13488,7 +13488,7 @@ textarea.form-control-lg {
     color: #000; /* 텍스트 색상을 검은색으로 설정 */
     border-radius: 4px;
     font-size: 14px;
-    background-color: #f8f8f8; /* 배경색을 밝은 회색으로 설정 */
+    background-color: #f8f8f8; /* 배경색 설정 */
 }
 
 .auth-buttons .btn:hover {
