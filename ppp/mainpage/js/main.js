@@ -6,7 +6,12 @@ document.getElementById('dropdownButton').addEventListener('click', function() {
     menu.style.display = 'block';
   }
 });
-
+//팝업
+document.getElementById('closeButton').addEventListener('click', function() {
+  var popup = document.getElementById('popup');
+  popup.style.display = 'none';
+});
+//팝업
   document.querySelectorAll('.dropdown-item').forEach(item => {
     item.addEventListener('click', function() {
       window.location.href = this.getAttribute('data-href');
