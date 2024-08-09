@@ -13580,7 +13580,6 @@ textarea.form-control-lg {
     justify-content: center; /* 수평 중앙 정렬 */
     cursor: pointer; /* 클릭 시 포인터 모양으로 변경 */
 }
-
 /* 하트 모양 생성 */
 /* 기본 하트 스타일 */
 .btn.heart {
@@ -13591,7 +13590,6 @@ textarea.form-control-lg {
     font-size: 24px; /* 하트 크기 조정 */
     transition: color 0.3s; /* 색상 변경 애니메이션 */
 }
-
 /* 하트 클릭 시 색상 변경 */
 .btn.heart.liked {
     color: red; /* 클릭 후 하트 색상 */
@@ -13609,5 +13607,3 @@ textarea.form-control-lg {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-size: 1rem;
 }
-
-/*# sourceMappingURL=bootstrap.min.css.map */
