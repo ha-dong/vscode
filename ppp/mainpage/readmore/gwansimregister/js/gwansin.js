@@ -157,3 +157,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    // localStorage에서 선택된 동물 정보 가져오기
+    const selectedPet = JSON.parse(localStorage.getItem('selectedPet'));
+  
+    if (selectedPet) {
+      document.querySelector('.container h1').innerText = selectedPet.details.split('<br/>')[1].split('이름 : ')[1]; // 이름을 제목으로 사용
+      document.querySelector('.pet-card img').src = selectedPet.image;
+      document.querySelector('.pet-card .pet-info').innerHTML = `
+        <h5>주소: ${selectedPet.address}</h5>
+        ${selectedPet.details}
+      `;
+    }
+  });
+  
