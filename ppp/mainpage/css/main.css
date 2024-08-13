@@ -1,183 +1,211 @@
-/* 상단 메뉴와 회원가입/로그인 버튼을 가로로 배치 */
-.navbar {
-    background-color: #F8E9E9; /* 분홍색 배경 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    flex-direction: row; /* 가로로 배치 */
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
 }
 
-/* 사이트 로고 */
-.navbar-brand img {
-    max-width: 100px;
-    height: auto;
+header img {
+    width: 80px;
 }
 
-/* 상단 메뉴 스타일링 */
-.servicemenu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+nav {
     display: flex;
-    align-items: center;
-    flex-direction: row; /* 가로로 배치 */
+    gap: 20px;
 }
 
-.servicemenu li {
+nav a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+
+nav a:hover {
+    color: #ff6f61;
+}
+
+.main-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.content {
+    padding: 20px;
+    display: flex;
+}
+
+.search-section {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 200px;
     margin-right: 20px;
 }
 
-.servicemenu a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-/* 회원가입 및 로그인 버튼 스타일링 */
-.auth-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-direction: row; /* 가로로 배치 */
-}
-
-.auth-buttons a {
-    background-color: #fff;
-    color: #333;
+.search-section input[type="text"],
+.search-section select {
+    padding: 10px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
-    padding: 5px 10px;
-    text-decoration: none;
-    margin-left: 10px;
     border-radius: 5px;
-    font-weight: bold;
 }
 
-.auth-buttons a:hover {
-    background-color: #f1f1f1;
-}
-
-/* 메인 제목 스타일 */
-h1.fw-light {
-    font-weight: 300;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #333;
-    text-align: center;
-    margin-top: 0px; /* 네비게이션 바와의 간격 확보 */
-}
-
-/* 드롭다운 메뉴 스타일 */
-.dropdown {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    margin: 0 auto;
-}
-
-.dropdown-button {
-    background-color: #F8E9E9;
-    border: 1px solid #ccc;
-    padding: 10px 20px;
-    font-weight: bold;
+.search-section button {
+    padding: 10px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 5px;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.dropdown-item {
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-.dropdown-item:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-/* 카드 그리드 레이아웃 설정 */
-.row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3개의 열을 생성 */
-    gap: 20px;
-    justify-content: center;
-}
-
-.col {
-    display: flex;
-    justify-content: center;
-}
-
-.card {
-    width: 500%; /* 각 카드가 그리드 셀의 너비에 맞게 */
-    height: auto;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.card-img-top {
-    width: 100%; /* 카드의 너비에 맞추기 */
-    height: 370px; /* 고정된 높이 설정 */
-    object-fit: cover; /* 이미지의 중심부를 우선적으로 보여줌 */
-    object-position: center; /* 이미지의 중앙 부분을 표시 */
-    border-radius: 0.375rem 0.375rem 0 0; /* 카드의 상단 모서리 둥글게 */
-}
-
-.card-body {
-    padding: 20px;
-}
-
-.card-text {
     margin-bottom: 10px;
 }
 
-.btn-group {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+.search-section button:hover {
+    background-color: #e55c50;
 }
 
-.btn.heart {
+.animal-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.animal-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    height: 350px;
+}
+
+.animal-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.animal-item p {
+    margin: 10px 0;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     background: none;
     border: none;
-    color: #e3342f;
-    font-size: 1.5rem;
+    font-size: 20px;
     cursor: pointer;
 }
 
-.btn.heart.liked {
-    color: red;
+.favorite-btn.empty {
+    color: gray;
+    font-size: 24px;
 }
 
-.interest-message {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #b5b5f7; /* 연보라색 배경 */
-    color: #000; /* 검은 글씨 */
-    padding: 10px 20px;
-    border-radius: 5px;
-    z-index: 1000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    font-size: 1rem;
+.favorite-btn.full {
+    color: red;
+    font-size: 24px;
+    content: '♥';
+}
+
+
+.modal {
     display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
+
+.modal-content img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+#add-favorite, #chat-btn {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#add-favorite:hover, #chat-btn:hover {
+    background-color: #e55c50;
+}
+
+/* 관심목록 페이지 스타일 */
+.favorite-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.favorite-list-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.favorite-list-item .details {
+    flex-grow: 1;
+}
+
+.favorite-list-item .details p {
+    margin: 5px 0;
+}
+
+.favorite-list-item .favorite-btn {
+    font-size: 24px;
 }
