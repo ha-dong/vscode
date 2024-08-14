@@ -4,6 +4,7 @@ let favoriteAnimals = JSON.parse(localStorage.getItem('favoriteAnimals')) || [];
 // 모달 창 제어 요소
 const modal = document.getElementById("animal-modal");
 const closeBtn = modal ? modal.querySelector(".close-btn") : null;
+let currentAnimal = null; // 현재 모달에 표시된 동물 정보 저장
 
 // 동물 프로필 클릭 시 모달 창 열기
 const animalItems = document.querySelectorAll(".animal-item");
@@ -19,6 +20,16 @@ animalItems.forEach((item) => {
             modal.querySelector('img').src = animalImage;
             modal.querySelector('h2').textContent = animalName;
             modal.querySelector('p').innerHTML = animalDetails.replace(/\n/g, '<br>');
+
+            // 현재 동물 정보 저장
+            currentAnimal = {
+                imageSrc: animalImage,
+                name: animalName,
+                details: animalDetails.replace(/\n/g, '<br>')
+            };
+
+            // 버튼 상태 업데이트
+            updateFavoriteButton();
 
             // 모달 창 표시
             modal.style.display = "block";
@@ -36,6 +47,31 @@ if (closeBtn) {
         if (event.target === modal) {
             modal.style.display = "none";
         }
+    });
+}
+
+// 모달 창 내 관심 등록/해제 버튼 동작
+const favoriteModalBtn = document.getElementById("add-favorite");
+
+if (favoriteModalBtn) {
+    favoriteModalBtn.addEventListener("click", () => {
+        const index = favoriteAnimals.findIndex(animal => animal.name === currentAnimal.name);
+        if (index > -1) {
+            // 이미 등록된 경우 -> 해제
+            favoriteAnimals.splice(index, 1);
+            localStorage.setItem('favoriteAnimals', JSON.stringify(favoriteAnimals));
+            alert("관심등록이 해제되었습니다.");
+            favoriteModalBtn.textContent = "관심등록";
+        } else {
+            // 등록되지 않은 경우 -> 등록
+            favoriteAnimals.push(currentAnimal);
+            localStorage.setItem('favoriteAnimals', JSON.stringify(favoriteAnimals));
+            alert("관심등록이 완료되었습니다.");
+            favoriteModalBtn.textContent = "관심해제";
+        }
+
+        // 하트 아이콘 상태 업데이트
+        updateHeartIcon(currentAnimal.name);
     });
 }
 
@@ -145,3 +181,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// 모달 창 내 버튼 상태 업데이트
+function updateFavoriteButton() {
+    if (favoriteAnimals.some(animal => animal.name === currentAnimal.name)) {
+        favoriteModalBtn.textContent = "관심해제";
+    } else {
+        favoriteModalBtn.textContent = "관심등록";
+    }
+}
+
+// 하트 아이콘 상태 업데이트
+function updateHeartIcon(animalName) {
+    favoriteBtns.forEach(btn => {
+        const btnAnimalName = btn.closest('.animal-item').querySelector('p').textContent.split('\n')[0];
+        if (btnAnimalName === animalName) {
+            if (favoriteAnimals.some(animal => animal.name === animalName)) {
+                btn.classList.add('full');
+                btn.classList.remove('empty');
+            } else {
+                btn.classList.add('empty');
+                btn.classList.remove('full');
+            }
+        }
+    });
+}
+
+    // 채팅 버튼 클릭 시 채팅 페이지로 이동
+    const chatButton = document.getElementById('chat-btn');
+    if (chatButton) {
+        chatButton.addEventListener('click', function () {
+            window.location.href = '../html/chatting.html'; // 수정된 경로
+        });
+    }
+    
+    
+    
+
