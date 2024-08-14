@@ -229,3 +229,13 @@ if (logo) {
         });
     });
 }
+
+    // 내 정보 버튼 클릭 시 내 정보로 이동
+    const registerbtn = document.getElementById('register-btn');
+    if (registerbtn) {
+        registerbtn.addEventListener('click', function () {
+            window.location.href = '../html/Mypage.html'; // 수정된 경로
+        });
+    }
+
+    
