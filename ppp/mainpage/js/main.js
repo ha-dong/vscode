@@ -214,7 +214,18 @@ function updateHeartIcon(animalName) {
             window.location.href = '../html/chatting.html'; // 수정된 경로
         });
     }
-    
-    
-    
 
+    // 로고 클릭 시 메인 화면으로 돌아가기
+const logo = document.querySelector('header img');
+
+if (logo) {
+    logo.addEventListener('click', () => {
+        // 검색 입력 초기화
+        document.getElementById("search-input").value = '';
+
+        // 모든 동물 항목을 다시 표시
+        animalItems.forEach(item => {
+            item.style.display = "block";
+        });
+    });
+}

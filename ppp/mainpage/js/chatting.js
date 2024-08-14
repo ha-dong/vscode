@@ -203,25 +203,29 @@ $(document).ready(function() {
         $chatMessages.scrollTop($chatMessages.prop('scrollHeight'));
     });
 
-    socket.on('chatDisabled', function(data) {
-        isChatDisabled = true;
-        let message;
-        
-        if (data.isReporter) {
-            message = `<div class="date-separator">신고한 상대와는 채팅이 불가합니다.</div>`;
-        } else {
-            message = `<div class="date-separator">상대방이 신고하여 채팅이 금지되었습니다.</div>`;
-        }
+socket.on('chatDisabled', function(data) {
+    isChatDisabled = true;
+    let message;
+    
+    if (data.isReporter) {
+        message = `<div class="date-separator">신고한 상대와는 채팅이 불가합니다.</div>`;
+    } else {
+        message = `<div class="date-separator">상대방이 신고하여 채팅이 금지되었습니다.</div>`;
+    }
 
-        if ($('.date-separator').last().text() !== $(message).text()) {
-            $chatMessages.append(message);
-        }
+    if ($('.date-separator').last().text() !== $(message).text()) {
+        $chatMessages.append(message);
+    }
 
-        $chatInput.prop('disabled', true);
-        $sendButton.prop('disabled', true);
-        $fileButton.prop('disabled', true);
-        $chatMessages.scrollTop($chatMessages.prop('scrollHeight'));
-    });
+    $chatMessages.append('<div class="alert-message">신고 상태로 인해 채팅이 불가능합니다.</div>');
+    $chatMessages.scrollTop($chatMessages.prop('scrollHeight'));
+    
+    // 채팅 입력창과 버튼 비활성화
+    $chatInput.prop('disabled', true);
+    $sendButton.prop('disabled', true);
+    $fileButton.prop('disabled', true);
+});
+
 
     // 폼의 기본 제출 동작을 막기 위해 이벤트 핸들러 수정
     $('#submit-report-button').on('click', function(event) {
@@ -229,6 +233,11 @@ $(document).ready(function() {
         isChatDisabled = true;
         $reportModal.hide();
         socket.emit('reportUser', { room, reportedUser: '상대방', reporter: currentUser, bkgNum: bkgNum });
+
+        // 신고 후 화면에 메시지 표시
+        const alertMessage = $('<div>').addClass('alert-message').text('신고 되어 채팅이 불가상태입니다.');
+        $chatMessages.append(alertMessage);
+        $chatMessages.scrollTop($chatMessages.prop('scrollHeight'));
     });
 
     $sendButton.on('click', function() {
@@ -452,8 +461,12 @@ $(document).ready(function() {
     });
 
     $('#exit-button').on('click', function() {
-        $chatMessages.empty(); 
-        socket.emit('leaveRoom', { room, username: currentUser });
+        const confirmExit = confirm("채팅방을 나가시겠습니까?");
+        if (confirmExit) {
+            $chatMessages.empty(); 
+            socket.emit('leaveRoom', { room, username: currentUser });
+            window.location.href = '../html/main.html'; // main.html로 이동
+        }
     });
 
     applyStarRating();
