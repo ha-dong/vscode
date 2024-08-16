@@ -19,7 +19,6 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
-
 oracledb.initOracleClient({ libDir: 'D:\\oracle\\instantclient_19_24' }); // Oracle Instant Client 경로 설정
 
 // 미들웨어 설정
@@ -36,7 +35,6 @@ app.use(session({
         sameSite: 'Lax'
     }
 }));
-
 
 app.get('/', (req, res) => {
     // 기존 세션이 있는지 확인
@@ -70,9 +68,6 @@ app.use((req, res, next) => {
         next();
     });
 });
-
-
-
 
 // Oracle DB 연결 설정
 const dbConfig = {
@@ -170,21 +165,6 @@ app.post('/api/login', (req, res) => {
     }
 });
 
-app.get('/api/check-login', (req, res) => {
-    if (req.session.user) {
-        console.log('로그인 상태 확인: 세션에 사용자 정보 있음');
-        res.json({ loggedIn: true, username: req.session.user.username });
-    } else {
-        console.log('로그인 상태 확인: 세션에 사용자 정보 없음');
-        res.json({ loggedIn: false });
-    }
-});
-
-
-
-
-
-
 app.get('/api/check-login', async (req, res) => {
     console.log('세션 정보:', req.session);
 
@@ -212,11 +192,6 @@ app.get('/api/check-login', async (req, res) => {
         res.json({ loggedIn: false });
     }
 });
-
-
-
-
-
 
 // 로그아웃 처리 경로
 app.post('/api/logout', (req, res) => {
@@ -490,12 +465,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 서버 시작
-app.listen(5500, () => {
-    console.log('서버가 http://localhost:5500 에서 실행 중입니다.');
+app.listen(port, () => {
+    console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
 });
-
-
-
-
-
-
