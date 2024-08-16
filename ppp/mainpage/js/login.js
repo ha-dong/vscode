@@ -15,15 +15,30 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('로그인 성공');
-            window.location.href = '../html/main.html'; // 메인 페이지로 리디렉션
+            window.location.href = '../html/main.html'; // 여기 경로를 확인하세요.
         } else {
             alert('로그인 실패: ' + data.message);
         }
     })
     .catch(error => console.error('로그인 요청 중 오류:', error));
-    
+
+    fetch('http://localhost:5500/api/check-login', {
+    method: 'GET',
+    credentials: 'include',  // 세션 쿠키가 포함되도록 설정
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => response.json())
+.then(data => {
+    if (data.loggedIn) {
+        // 로그인된 상태
+        console.log('로그인 상태 확인됨:', data.username);
+    } else {
+        // 로그인되지 않은 상태
+        console.log('로그인 상태 아님');
+    }
+})
+.catch(error => console.error('로그인 상태 확인 중 오류:', error));
+
 });
-
-
-

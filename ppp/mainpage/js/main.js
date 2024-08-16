@@ -4,6 +4,46 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentAnimal = null;
 
     const animalItems = document.querySelectorAll(".animal-item");
+    
+    checkLoginStatus();
+
+    function checkLoginStatus() {
+        fetch('http://localhost:5500/api/check-login', {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.loggedIn) {
+                document.getElementById('login-link').style.display = 'none';
+                document.getElementById('username-display').textContent = `환영합니다, ${data.username}`;
+                document.getElementById('username-display').style.display = 'inline';
+                document.getElementById('logout-button').style.display = 'inline';
+            } else {
+                document.getElementById('login-link').style.display = 'inline';
+                document.getElementById('username-display').style.display = 'none';
+                document.getElementById('logout-button').style.display = 'none';
+            }
+        })
+        .catch(error => console.error('로그인 상태 확인 중 오류:', error));
+    }
+
+    document.getElementById('logout-button').addEventListener('click', function() {
+        fetch('http://localhost:5500/api/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(() => {
+            window.location.href = 'login.html';
+        })
+        .catch(error => console.error('로그아웃 중 오류:', error));
+    });
 
     animalItems.forEach((item) => {
         item.addEventListener("click", () => {
@@ -196,4 +236,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
-
