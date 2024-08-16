@@ -1,3 +1,4 @@
+<!--PetRegistPage.html-->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,28 +10,26 @@
 <body>
     <header>
         <div class="logo">
-            <a href="main.html">
-                <img src="../img/logo.png" alt="Pet Temporary Care Service" class="logo">
-            </a>
+            <img src="../PPP.png" alt="Logo">
         </div>
         <nav>
             <ul>
-                <li><a href="main.html">홈</a></li>
-                <li><a href="about.html">사이트 소개</a></li>
-                <li><a href="terms.html">이용약관</a></li>
-                <li><a href="inquiries.html">문의사항</a></li>
+                <li><a href="#">홈</a></li>
+                <li><a href="#">사이트 소개</a></li>
+                <li><a href="#">이용약관</a></li>
+                <li><a href="#">문의사항</a></li>
             </ul>
         </nav>
         <div class="auth-buttons">
-            <button class="login-button" onclick="location.href='login.html'">로그인</button>
-            <button class="signup-button" onclick="location.href='register.html'">회원가입</button>
+            <button>로그인</button>
+            <button>회원가입</button>
         </div>
     </header>
 
     <main>
         <div class="container">
             <h1>애완동물 등록</h1>
-            <form action="http://localhost:3000/register-pet" method="post" enctype="application/x-www-form-urlencoded">
+            <form action="/register_pet" method="post" enctype="multipart/form-data">
                 <div class="form-row">
                     <div class="left-section">
                         <div class="photo-upload">
@@ -44,17 +43,18 @@
                     <div class="right-section">
                         <div class="form-group">
                             <label for="name">이름</label>
-                            <input type="text" id="name" name="name" required>
+                            <input type="text" id="name" name="name">
                         </div>
                         <div class="form-group">
                             <label for="breed">종류</label>
                             <select id="breed" name="breed">
-                                <option value="">--종류 선택--</option>
-                                <option value="mammal">포유류</option>
-                                <option value="bird">조류</option>
-                                <option value="rodent">설치류</option>
+                                <option value="dog">--종류--</option>
+                                <option value="dog">포유류</option>
+                                <option value="cat">조류</option>
+                                <option value="fish">설치류</option>
                             </select>
                         </div>
+                        
                         <div class="form-group">
                             <label>성별</label>
                             <input type="radio" id="male" name="gender" value="male">
@@ -68,17 +68,19 @@
                         </div>
                         <div class="form-group">
                             <label for="age">나이</label>
-                            <input type="text" id="age" name="age" required>
+                            <input type="text" id="age" name="age">
                             <span class="unit">살(개월)</span>
                         </div>
+                        
                         <div class="form-group">
                             <label for="height">키</label>
-                            <input type="text" id="height" name="height" required>
+                            <input type="text" id="height" name="height">
                             <span class="unit">cm</span>
                         </div>
+                        
                         <div class="form-group">
                             <label for="weight">몸무게</label>
-                            <input type="text" id="weight" name="weight" required>
+                            <input type="text" id="weight" name="weight">
                             <span class="unit">kg</span>
                         </div>
                     </div>

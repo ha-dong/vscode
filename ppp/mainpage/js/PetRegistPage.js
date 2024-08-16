@@ -1,3 +1,4 @@
+// PetRegistPage.js
 // 탭 전환 기능
 function openTab(tabName) {
     var i;
@@ -62,3 +63,7 @@ document.querySelector("form").addEventListener("submit", function(event) {
         alert("사진을 업로드해주세요.");
     }
 });
+
+
+
+

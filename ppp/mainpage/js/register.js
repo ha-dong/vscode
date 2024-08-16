@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const response = await fetch('http://localhost:5500/api/validate-userid', {
+            const response = await fetch('http://localhost:3000/api/validate-userid', { // 서버 포트 3000으로 설정
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -18,14 +18,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 body: JSON.stringify({ userid: userId })
             });
 
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
             const data = await response.json();
-            if (data.exists) {
-                alert('사용중인 ID입니다.');
+            if (data.exists !== undefined) {
+                alert(data.exists ? '사용중인 ID입니다.' : '사용 가능한 ID입니다.');
             } else {
-                alert('사용 가능한 ID입니다.');
+                alert('서버 응답 형식이 잘못되었습니다.');
             }
         } catch (error) {
             console.error('중복 확인 오류:', error);
+            alert('중복 확인 중 오류가 발생했습니다.');
         }
     });
 
@@ -54,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const response = await fetch('http://localhost:5500/api/register', {
+            const response = await fetch('http://localhost:3000/api/register', { // 서버 포트 3000으로 설정
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -67,11 +72,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const data = await response.json();
-            if (data.success) {
-                alert('회원가입이 성공적으로 완료되었습니다.');
-                window.location.href = '../html/login.html'; // 로그인 페이지로 리다이렉트
+            if (data.success !== undefined) {
+                if (data.success) {
+                    alert('회원가입이 성공적으로 완료되었습니다.');
+                    window.location.href = '../html/login.html'; // 로그인 페이지로 리다이렉트
+                } else {
+                    alert('회원가입 실패: 서버 오류가 발생했습니다.');
+                }
             } else {
-                alert('회원가입 실패: 서버 오류가 발생했습니다.');
+                alert('서버 응답 형식이 잘못되었습니다.');
             }
         } catch (error) {
             console.error('회원가입 오류:', error);

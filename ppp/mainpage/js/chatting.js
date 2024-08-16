@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    const SERVER_IP = '192.168.8.15';
-    const socket = io(`http://${SERVER_IP}:3000`);
+    const SERVER_IP = 'localhost';
+    const socket = io(`http://${SERVER_IP}:5500`);
     const room = 'chatroom1';
     const currentUser = prompt("사용자 이름을 입력하세요:");
     const bkgNum = 12345;
@@ -472,3 +472,8 @@ socket.on('chatDisabled', function(data) {
     applyStarRating();
     $chatMessages.scrollTop($chatMessages.prop('scrollHeight'));
 });
+
+
+
+
+

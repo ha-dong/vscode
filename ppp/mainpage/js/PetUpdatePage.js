@@ -1,3 +1,4 @@
+// PetUpdatePage.js
 // 탭 전환 기능
 function openTab(tabName) {
     var i;
@@ -43,3 +44,6 @@ document.getElementById("photo").addEventListener("change", function() {
 
 // 이미지 클릭 시 다시 파일 선택 창을 열 수 있도록 설정
 document.getElementById("uploaded-image").addEventListener("click", triggerFileInput);
+
+
+
