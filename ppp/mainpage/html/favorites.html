@@ -1,4 +1,3 @@
-<!--favorites.html-->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관심목록</title>
     <link rel="stylesheet" href="../css/main.css">
+    <style>
+        .details p {
+            font-weight: normal; /* 기본 글씨로 설정 */
+        }
+        .details .bold {
+            font-weight: bold; /* 굵은 글씨로 설정 */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -31,6 +38,50 @@
         </div>
     </main>
 
-    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const favoriteList = document.querySelector('.animal-list');
+            const savedFavorites = JSON.parse(localStorage.getItem('favoriteAnimals')) || [];
+
+            if (savedFavorites.length === 0) {
+                favoriteList.innerHTML = '<p>관심목록이 비어 있습니다.</p>';
+                return;
+            }
+
+            savedFavorites.forEach(animal => {
+                const animalItem = document.createElement('div');
+                animalItem.classList.add('favorite-list-item');
+
+                // 동물의 세부사항을 한 줄로 제한
+                const detailsArray = animal.details.split('<br>');
+                const oneLineDetail = detailsArray[0]; // 첫 번째 줄만 사용
+
+                animalItem.innerHTML = `
+                    <img src="${animal.imageSrc}" alt="동물 이미지">
+                    <div class="details">
+                        <p>${oneLineDetail}</p> <!-- 한 줄만 표시 -->
+                    </div>
+                    <button class="favorite-btn full">♥</button>
+                `;
+
+                // 관심 해제 기능 추가
+                const favoriteBtn = animalItem.querySelector('.favorite-btn');
+                favoriteBtn.addEventListener('click', () => {
+                    const index = savedFavorites.findIndex(favAnimal => favAnimal.name === animal.name);
+                    if (index > -1) {
+                        savedFavorites.splice(index, 1);
+                        localStorage.setItem('favoriteAnimals', JSON.stringify(savedFavorites));
+                        animalItem.remove();
+                        alert('관심등록이 해제되었습니다.');
+                        if (savedFavorites.length === 0) {
+                            favoriteList.innerHTML = '<p>관심목록이 비어 있습니다.</p>';
+                        }
+                    }
+                });
+
+                favoriteList.appendChild(animalItem);
+            });
+        });
+    </script>
 </body>
 </html>
