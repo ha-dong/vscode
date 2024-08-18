@@ -14,12 +14,13 @@ const FileStore = require('session-file-store')(session);
 const app = express();
 const port = 5500;
 const corsOptions = {
-    origin: 'http://127.0.0.1:5500',
+    origin: ['http://127.0.0.1:5500'],
     credentials: true,
     optionsSuccessStatus: 200
 };
 
-oracledb.initOracleClient({ libDir: 'D:\\oracle\\instantclient_19_24' }); // Oracle Instant Client 경로 설정
+
+oracledb.initOracleClient({ libDir: 'C:\\instantclient_19_24' }); // Oracle Instant Client 경로 설정
 
 // 미들웨어 설정
 app.use(cors(corsOptions));
@@ -27,47 +28,36 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-    secret: 'secret-key',
-    resave: false, // 세션이 수정되지 않은 경우 다시 저장하지 않음
-    saveUninitialized: false, // 초기화되지 않은 세션은 저장하지 않음
+    store: new FileStore({
+        path: './sessions',
+        retries: 1,
+    }),
+    secret: 'your_secret_key_1234567890',
+    resave: false,
+    saveUninitialized: false,
+    genid: function(req) {
+        return crypto.randomBytes(16).toString('hex'); // 동적으로 세션 ID 생성
+    },
     cookie: {
-        maxAge: 86400000,
-        sameSite: 'Lax'
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        sameSite: 'Lax', 
     }
 }));
 
-app.get('/', (req, res) => {
-    // 기존 세션이 있는지 확인
-    if (!req.session.user) {
-        req.session.user = { userid: 'fixedUser', username: 'Fixed User' };
-    }
-    res.sendFile(path.join(__dirname, 'html', 'main.html'));
-});
 
 app.use((req, res, next) => {
-    const fixedSessionId = 'fixedSessionId123456'; // 강제로 고정할 세션 ID 설정
-
-    // 세션 ID를 강제로 고정
-    if (!req.sessionID || req.sessionID !== fixedSessionId) {
-        req.sessionID = fixedSessionId;
+    console.log('세션 ID:', req.sessionID);
+    console.log('세션 상태:', req.session);
+    console.log('클라이언트 쿠키:', req.headers.cookie);
+    if (!req.headers.cookie) {
+        console.log('쿠키가 전송되지 않음');
     }
-
-    if (!req.session.user) {
-        console.log('세션에 사용자 정보 없음, 세션 재생성 안함');
-        // 기존 세션을 유지하도록 수정, 새로운 세션을 생성하지 않음
-        req.session.user = { userid: 'fixedUser', username: 'Fixed User' };
-    } else {
-        console.log('기존 세션 사용:', req.sessionID);
-    }
-
-    req.session.save((err) => {
-        if (err) {
-            console.error('세션 저장 오류:', err);
-            return res.status(500).json({ success: false, message: '세션 저장 중 오류가 발생했습니다.' });
-        }
-        next();
-    });
+    next();
 });
+
+
 
 // Oracle DB 연결 설정
 const dbConfig = {
@@ -150,20 +140,37 @@ app.post('/api/validate-userid', async (req, res) => {
 });
 
 // 로그인 처리 엔드포인트
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
     const { userid, password } = req.body;
 
-    if (userid === 'jin' && password === 'password') {
-        req.session.user = {
-            userid: 'fixedUser',
-            username: 'Fixed User'
-        };
-        console.log('세션 고정 및 저장 완료:', req.session);
-        res.json({ success: true });
-    } else {
-        res.json({ success: false, message: '로그인 실패' });
+    try {
+        const connection = await oracledb.getConnection(dbConfig);
+        const result = await connection.execute(`SELECT U_PW, U_NAME FROM USERS WHERE U_ID = :userid`, { userid });
+        await connection.close();
+
+        if (result.rows.length > 0) {
+            const hashedPassword = result.rows[0][0];
+            const username = result.rows[0][1];
+            const passwordMatch = await bcrypt.compare(password, hashedPassword);
+
+            if (passwordMatch) {
+                req.session.user = { userid, username }; // 세션에 사용자 정보 저장
+                res.status(200).json({ success: true, sessionId: req.sessionID });
+            } else {
+                res.status(401).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
+            }
+            
+        } else {
+            res.status(404).json({ success: false, message: '해당 아이디가 존재하지 않습니다.' });
+        }
+    } catch (err) {
+        res.status(500).json({ success: false, message: '로그인 중 오류가 발생했습니다.', error: err.message });
     }
 });
+
+
+
+
 
 app.get('/api/check-login', async (req, res) => {
     console.log('세션 정보:', req.session);
@@ -179,7 +186,7 @@ app.get('/api/check-login', async (req, res) => {
             await connection.close();
 
             if (result.rows.length > 0) {
-                res.json({ loggedIn: true, username: req.session.user.username });
+                res.json({ loggedIn: true, username: result.rows[0][0] });
             } else {
                 res.json({ loggedIn: false });
             }
@@ -192,6 +199,11 @@ app.get('/api/check-login', async (req, res) => {
         res.json({ loggedIn: false });
     }
 });
+
+
+
+
+
 
 // 로그아웃 처리 경로
 app.post('/api/logout', (req, res) => {
@@ -460,11 +472,74 @@ app.get('/api/get-user-id', (req, res) => {
     }
 });
 
+// 애완동물 등록 API
+app.post('/register-pet', async (req, res) => {
+    let connection;
+    console.log('Received body:', req.body);
+  
+    try {
+      connection = await oracledb.getConnection(dbConfig);
+  
+      const { name, weight, height, breed, age, gender, photo, health, vaccination, introduction } = req.body;
+  
+      const breedCombined = breed.join(',');
+      const type = breed[0];
+      console.log('Received values:', { name, weight, height, age, breed: breedCombined, type });
+      const weightNum = parseFloat(weight);
+      const heightNum = parseFloat(height);
+      const ageNum = parseFloat(age);
+  
+      if (isNaN(weightNum) || isNaN(heightNum) || isNaN(ageNum)) {
+        console.log('Invalid number input:', { weightNum, heightNum, ageNum });
+        return res.status(400).send("유효하지 않은 숫자 입력입니다.");
+      }
+  
+      const result = await connection.execute(
+        `INSERT INTO PET (P_NUM, P_NAME, P_WEI, P_HEI, P_TYPE, P_KIND, P_AGE, P_PHOTO, P_HS, P_VR, P_GENDER, P_ITD)
+         VALUES (PET_SEQ.NEXTVAL, :name, :weight, :height, :type, :breed, :age, :photo, :health, :vaccination, :gender, :introduction)`,
+        {
+          name: name,
+          weight: weightNum,
+          height: heightNum,
+          type: type,     
+          breed: breedCombined,
+          age: ageNum,         
+          photo: photo || null,
+          health: health,
+          vaccination: vaccination,
+          gender: gender,
+          introduction: introduction
+        },
+        { autoCommit: true }
+      );
+  
+      res.status(200).json("애완동물이 성공적으로 등록되었습니다.");
+    } catch (err) {
+      console.error('Database operation error:', err);
+      res.status(500).json("애완동물 등록 중 오류가 발생했습니다.");
+    } finally {
+      if (connection) {
+        try {
+          await connection.close();
+        } catch (err) {
+          console.error('Error closing connection:', err);
+        }
+      }
+    }
+  });
+  
+
 // 정적 파일 제공 설정
 app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 서버 시작
-app.listen(port, () => {
-    console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
+app.listen(5500, () => {
+    console.log('서버가 http://localhost:5500 에서 실행 중입니다.');
 });
+
+
+
+
+
+

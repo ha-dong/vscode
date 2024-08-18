@@ -15,7 +15,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            window.location.href = '../html/main.html'; // 여기 경로를 확인하세요.
+            window.location.href = '../html/main1.html'; // 여기 경로를 확인하세요.
         } else {
             alert('로그인 실패: ' + data.message);
         }

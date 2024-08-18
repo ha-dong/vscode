@@ -1,4 +1,4 @@
-script<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -10,16 +10,19 @@ script<!DOCTYPE html>
 <body>
     <div class="container">
         <header>
-            <img src="../img/logo.png" alt="Logo" class="logo">
+            <a href="main1.html">
+                <img src="../img/logo.png" alt="Logo" class="logo">
+            </a>
             <nav>
                 <ul class="nav-list">
                     <li><a href="about.html" class="nav-link" id="about-link">사이트 소개</a></li>
                     <li><a href="terms.html" class="nav-link" id="terms-link">이용약관</a></li>
                     <li><a href="inquiries.html" class="nav-link active" id="inquiries-link">문의사항</a></li>
                     <li><a href="register.html" class="nav-link">회원가입</a></li>
-                    <li><a href="login.html" class="nav-link" id="login-link">로그인</a></li>
-                    <span id="username-display" style="display:none;"></span>
-                    <button id="logout-button" style="display:none;" onclick="logout()">로그 아웃</button>              
+                    <div class="user-info">
+                        <span class="profile-text">정재훈 님</span>
+                        <button class="logout-btn" onclick="location.href='login.html'">로그아웃</button>
+                    </div>          
                 </ul>
             </nav>
         </header>

@@ -1,4 +1,3 @@
-<!--PetUpdatePage.html-->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,19 +9,21 @@
 <body>
     <header>
         <div class="logo">
-            <img src="../PPP.png" alt="Logo">
+            <a href="main1.html">
+                <img src="../PPP.png" alt="Logo">
+            </a>
         </div>
         <nav>
             <ul>
-                <li><a href="#">홈</a></li>
-                <li><a href="#">사이트 소개</a></li>
-                <li><a href="#">이용약관</a></li>
-                <li><a href="#">문의사항</a></li>
+                <li><a href="main.html">홈</a></li>
+                <li><a href="about.html">사이트 소개</a></li>
+                <li><a href="terms.html">이용약관</a></li>
+                <li><a href="inquiries.html">문의사항</a></li>
             </ul>
         </nav>
-        <div class="auth-buttons">
-            <button>로그인</button>
-            <button>회원가입</button>
+        <div class="user-info">
+            <span class="profile-text">정재훈 님</span>
+            <button class="logout-btn" onclick="location.href='login.html'">로그아웃</button>
         </div>
     </header>
 
@@ -102,8 +103,8 @@
                     </div>
                 </div>
                 <div class="button-group">
-                    <button type="submit" class="regist-btn">등록</button>
-                    <button type="submit" class="update-btn">수정</button>
+                    <button type="submit" class="regist-btn">수정</button>
+                    <button type="submit" class="update-btn">취소</button>
                 </div>
             </form>
         </div>
