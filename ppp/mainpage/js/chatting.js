@@ -2,7 +2,7 @@ $(document).ready(function() {
     const SERVER_IP = 'localhost';
     const socket = io(`http://${SERVER_IP}:5500`);
     const room = 'chatroom1';
-    const currentUser = prompt("사용자 이름을 입력하세요:");
+    const currentUser = '정재훈'; // 사용자 이름 고정
     const bkgNum = 12345;
     const profileIconHTML = '<div class="profile-icon"></div>';
 

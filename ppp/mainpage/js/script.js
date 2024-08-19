@@ -1,31 +1,3 @@
-
-function checkLoginStatus() {
-    fetch('http://localhost:5500/api/check-login', {
-        credentials: 'include' // 세션 쿠키를 포함하여 요청
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.loggedIn) {
-            // 로그인되어 있는 경우, 로그아웃 버튼 표시
-            document.getElementById('username-display').textContent = data.username;
-            document.getElementById('username-display').style.display = 'block';
-            document.getElementById('login-link').style.display = 'none';
-            document.getElementById('logout-button').style.display = 'block';
-        } else {
-            // 로그인되지 않은 경우, 로그인 버튼 표시
-            document.getElementById('username-display').style.display = 'none';
-            document.getElementById('login-link').style.display = 'block';
-            document.getElementById('logout-button').style.display = 'none';
-        }
-    })
-    .catch(error => console.error('로그인 상태 확인 중 오류:', error));
-}
-
-// 페이지 로드 시 로그인 상태 확인
-document.addEventListener('DOMContentLoaded', function() {
-    checkLoginStatus();
-});
-
     
 
 function logout() {
